@@ -12,7 +12,7 @@ steps:
 
   # Compute Engine Instance Group Deploy
   - name: gcr.io/cloud-builders/gcloud
-    args: [ compute, instance-groups, managed, rolling-action, restart, ig-gce-angular-app, region=asia-northeast3 ]
+    args: [ compute, instance-groups, managed, rolling-action, restart, ig-gce-angular-app, --region=asia-northeast3 ]
 
 
 timeout: 2400s
