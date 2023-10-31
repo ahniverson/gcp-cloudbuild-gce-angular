@@ -1,12 +1,18 @@
 steps:
+  # Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t',
+           'asia-northeast3-docker.pkg.dev/${PROJECT_ID}/gce-app/angular-app',
+           '.']
 
-- name: gcr.io/cloud-builders/docker
-  args: [ build, -t, gcr.io/$PROJECT_ID/gcp-cloudbuild-gce-angular, . ]
+  # Docker Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push',
+           'asia-northeast3-docker.pkg.dev/${PROJECT_ID}/gce-app/angular-app']
 
-- name: gcr.io/cloud-builders/gcloud
-  args: [ compute, instance-groups, managed, rolling-action, restart, gce-angular-instance-group, --zone=us-east1-b ]
+  # Compute Engine Instance Group Deploy
+  - name: gcr.io/cloud-builders/gcloud
+    args: [ compute, instance-groups, managed, rolling-action, restart, ig-gce-angular-app ]
 
 
-images:
-
-- gcr.io/$PROJECT_ID/gcp-cloudbuild-gce-angular
+timeout: 2400s
